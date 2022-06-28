@@ -6,6 +6,7 @@
   --light: hsl(20, 7%, 85%);
   --bggrey: #eee;
   --highlight: #fff;
+  --accent: #0075b0;
 
   --stripeGrad: linear-gradient(-90deg, black 0%, var(--darker) 40%, var(--darker) 60%, var(--dark) 90%, black 100%);
   --StripeSize: 10px 20px;
@@ -36,8 +37,103 @@ body {
   background-color: #f9fbfd;
 }
 
+/* -------------------------------------- */
 
+#header-panel {
+  background-image: var(--stripeGrad);
+  background-size: var(--StripeSize);
+  max-width: 1200px;
+  width: 90%;
+  margin: auto;
 
+}
+
+h1 {
+  color: white;
+  font-size: 2rem;
+  text-shadow: 3px 3px 4px var(--darker);
+}
+
+#main-page {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  width: 90%;
+  margin: auto;
+}
+
+/* -------------------------------------- */
+#search-panel {
+  width: 30%;
+  background-color: var(--highlight);
+}
+
+#cityInput, hr {
+  width: 95%;
+  margin: 3px;
+  border-radius: 5px;
+  border: 1px solid var(--darker);
+}
+.btnSearch{
+  background-color: var(--accent);
+}
+.btnCity{
+  background-color: var(--dark);
+}
+
+/* -------------------------------------- */
+
+#info-panel {
+  width: 70%;
+  background-color: var(--highlight);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+}
+
+#todayWeather {
+  width: 95%;
+}
+
+#forecastPanel {
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content:space-between;
+}
+
+.fCast {
+  margin: 3px;
+  padding: 3px 10px;
+  border: 1px solid var(--darker);
+  border-radius: 5px;
+
+}
+.dayForecast {
+  margin: 3px;
+  padding: 3px 10px;
+}
+/* -------------------------------------- */
+
+.btn{
+width:95%;
+border-radius: 3px;
+color: var(--highlight);
+box-shadow: inset -2px -2px 4px var(--darker);
+margin: 3px ;
+botder:none;
+}
+.btn:hover{
+  color:black;
+  filter: brightness(120%);
+}
+.btn:active{
+  color:white;
+  filter: brightness(80%);
+}
 
 /* Media Sizes ----------------- */
 
@@ -50,8 +146,21 @@ body {
 
 @media (max-width: 450px) {
 
-  .btn {
-    font-size: 0.8rem;
+  #main-page {
+    flex-direction: column;
+    width: 95%;
   }
- 
+
+  #search-panel {
+    width: 95%;
+  }
+
+  #info-panel {
+    flex-direction: column;
+    width: 95%;
+  }
+
+
+
+
 }

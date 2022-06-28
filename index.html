@@ -11,13 +11,44 @@
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 
-    <!-- JavaScript -->
-    <script src="./assets/js/script.js"></script>
+<!-- moment JS  -->
+    <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+  ></script>
 
 </head>
 
 <body>
-
+    <div id="header-panel">
+        <h1>Weather Dashboard</h1></div>
+    <div id="main-page">
+        <div id="search-panel">
+            <div id="searchForm">
+                <h2>Search for a City:</h2>
+                <input type="text" name="city" id="cityInput">
+                <hr>
+                <button id="searchBtn" class="btn  btnSearch">Search</button>
+            </div>
+            <div id="previousButtons">
+                <button class="btn btnCity">Melbourne</button>
+            </div>
+        </div>
+        <div id="info-panel">
+            <div id="todayWeather" class="fCast">Melb 28 Jun 2022</div>
+            <div id="forecastPanel">
+                <div id="day1" class="fCast dayForecast">1</div>
+                <div id="day2" class="fCast dayForecast">2</div>
+                <div id="day3" class="fCast dayForecast">3</div>
+                <div id="day4" class="fCast dayForecast">4</div>
+                <div id="day5" class="fCast dayForecast">5</div>
+            </div>
+        </div>
+    </div>
 </body>
+
+<!-- JavaScript -->
+<script src="./assets/js/script.js"></script>
+
 
 </html>

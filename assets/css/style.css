@@ -124,7 +124,7 @@ border-radius: 3px;
 color: var(--highlight);
 box-shadow: inset -2px -2px 4px var(--darker);
 margin: 3px ;
-botder:none;
+border:none;
 }
 .btn:hover{
   color:black;

@@ -1,0 +1,29 @@
+Google maps api credentials
+AIzaSyDc-tUEoCpmRCYZwqsPSp8iO98PSp-9RI0
+
+
+https://developers.google.com/maps/documentation/javascript/supported_types?hl=en-GB
+country
+locality
+neighborhood
+
+The Place type values in Table 2 are used in the following ways:
+
+As part of the result of a Place details request (for example, a call to fetchPlace()), or anywhere a Place result is returned. The request must specify the appropriate "types" data field.
+
+The (cities) type collection instructs the Places service to return results that match locality or administrative_area_level_3.
+
+_____________________
+
+https://openweathermap.org/api/geocoding-api
+
+
+http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+
+http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
+
+DefaultKey 37572b676fcac9bf15842774f3087088
+bootcampKey 62caf8ac688fdb1fb47fbf2e7be6f372
+
+http://api.openweathermap.org/geo/1.0/direct?q=melbourne&limit=10&appid=62caf8ac688fdb1fb47fbf2e7be6f372
+

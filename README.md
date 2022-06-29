@@ -1,5 +1,5 @@
-# BC05-02-
-A day planner to show you where you are in your day's progress
+# BC06-02-Weather_Dashboard
+A dashboard showing weather data for cities we can search for. These cities can be added to our list as buttons so that we have a one-push access to past detinations. 
 
 ## Description
 Demonstrate understanding of Bootstrap and JQuery by making a day planner
@@ -17,7 +17,7 @@ Demonstrate understanding of Bootstrap and JQuery by making a day planner
 
 Access to website at *** and Javascript running is all that is required.
 
-Github page at 
+Github page at https://github.com/rschragger/BC06-02-Weather-Dashboard
 
 ## Usage
 
@@ -31,11 +31,12 @@ The home screen has
 
 [Google](google.com) and many Javascript references in [w3schools](https://www.w3schools.com) and [MDN(Mozilla Dev Network)](https://developer.mozilla.org/en-US/) were used frequently to research topics and syntax used.
 
-Bootstrap
+MomentJS
 
-JQuery
+API List
+https://openweathermap.org/api/one-call-api
 
-Sounds sourced from https://freesound.org/.
+https://developers.google.com/maps/documentation/javascript/places#GetStarted
 
 
 ## License

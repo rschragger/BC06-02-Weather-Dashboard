@@ -1,6 +1,9 @@
 //Create variables ---------------------------------------------------------
 //var IDs
-//defaults
+//default prefs
+var unitsPref = 'metric'; // allow toggle 'imperial'
+var alertsPref = 'on'; // allow toggle 'off'
+
 var defaultVals = {
 }
 var testingVal = {};
@@ -12,7 +15,6 @@ var locationData = {}; //this is an object
 var limitGeoNo = 1; //how many results for geolocation
 
 //Weather API variables
-var useUnits = 'metric'; // allow choose 'imperial'
 var exclusions = 'minutely' // allow for 'current,minutely,hourly,daily,alerts'
 var fullCurrentWeather = {};
 
@@ -30,29 +32,82 @@ searchButton.addEventListener('click', function () {
 
 //Error modal
 {
-    var errorModal = document.getElementById("errorModal");
+    var windowModal = document.getElementById("windowModal");
     var closeSpan = document.getElementsByClassName("closeSpan")[0];
     //Error modal functions
     // Open error modal
-    function showErrorModal(message) {
+    function showWindowModal(message) {
         var errorPElement = document.getElementById('errorMessage');
         errorPElement.textContent = message;
-        errorModal.style.display = "block";
+        windowModal.style.display = "block";
     }
     //close error modal
     // When the user clicks on <span> (x), close the modal
     closeSpan.onclick = function () {
-        errorModal.style.display = "none";
+        windowModal.style.display = "none";
     }
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
-        if (event.target == errorModal) {
-            errorModal.style.display = "none";
+        if (event.target == windowModal) {
+            windowModal.style.display = "none";
         }
     }
-} //End errorModal
+} //End windowModal
 
 // Functions ---------------------------------------------------------
+//Preferences
+
+// var element = document.querySelector(' … ');
+// var styles = window.getComputedStyle(element,':after')
+// var content = styles['content'];
+
+
+var prefsBtn = document.getElementById('prefsPanel');
+// mouseenter 
+prefsBtn.addEventListener('mouseenter', function (event) {
+    event.stopPropagation();
+    var prefChoice = document.getElementById('pref-choice');
+    prefChoice.setAttribute('style', "display:block");
+    // var thisButton = event.target;
+    // var thisSearchTerm = thisButton.getAttribute("data-search-term");
+    //  console.log(thisButton)
+});
+// Click
+prefsBtn.addEventListener('click', function (event) {
+    event.stopPropagation();
+    //Initiate by ensuring all choices are hidden
+    var hideAllDivClass = document.getElementsByClassName('pref-choice-modal');
+    hideAllDivClass.style = "display:none";
+    var thisButton = event.target;
+    // console.log(thisButton.textContent)
+    var useDivId = 'pref-choice-' + thisButton.textContent;
+    var prefsDiv = document.getElementById(useDivId);
+    prefsDiv.setAttribute('style', "display:block");
+    showWindowModal('');
+
+    //get response from modal
+    var modalPrefsBtn = document.getElementById('prefsPanelModal');
+    modalPrefsBtn.addEventListener('click', function (event) {
+        var thisPrefButton = event.target;
+        console.log(thisPrefButton.textContent);
+        var prefText = thisPrefButton.textContent;
+        var evalPrefVar = thisButton.textContent + `Pref = '` + prefText + `'`;
+        console.log(evalPrefVar);
+        eval(evalPrefVar);
+        console.log(evalPrefVar + '\nUnitsPref:' + unitsPref + '  alertPref:' + alertsPref)
+        prefsDiv.setAttribute('style', "display:none");
+        windowModal.style.display = "none";
+
+    });
+});
+// mouseleave
+prefsBtn.addEventListener('mouseleave', function (event) {
+    event.stopPropagation();
+    var prefChoice = document.getElementById('pref-choice');
+    prefChoice.setAttribute('style', "display:none");
+});
+
+
 function locationAPI(searchTerm) {
     //  https://api.openweathermap.org/geo/1.0/direct?q=melbourne&limit=5&appid=37572b676fcac9bf15842774f3087088
 
@@ -61,7 +116,7 @@ function locationAPI(searchTerm) {
     fetch(requestUrl)
         .then(function (response) {
             if (response.status != 200) {
-                showErrorModal('Error: ' + response.status)
+                showWindowModal('Error: ' + response.status)
             }
             console.log(response)
             return response.json();
@@ -73,7 +128,7 @@ function locationAPI(searchTerm) {
             console.log(data);
             // testingVal=data;
             if (data.length < 1) {
-                showErrorModal('No result was found for that search term, please try again');
+                showWindowModal('No result was found for that search term, please try again');
             } else {
                 locationData = {
                     'name': data[0].name,
@@ -117,6 +172,7 @@ function addLocationToLocal(locData) {
     console.log('loc list:' + JSON.stringify(locationsList))
     localStorage.setItem('locationsList', JSON.stringify(locationsList));
     locationsList = {};
+    makeLocationButtons();
 
 }
 //location buttons
@@ -124,22 +180,21 @@ var locationButtons = document.getElementById('locationButtons');
 
 //function resetLocationButtonEventListener(){
 locationButtons.addEventListener('click', function (event) {
-    //event.stopPropagation();
+    event.stopPropagation();
     var thisButton = event.target;
     var thisSearchTerm = thisButton.getAttribute("data-search-term");
     // console.log(searchTerm)
-    alert(thisSearchTerm);
-    event.stopPropagation();
     locationAPI(thisSearchTerm);
+
 });
-//}
+
 
 function createOneLocationButton(name, searchTerm) {
     //use locationButtons global
     //<button class="btn btnCity" data-search-term="melbourne,victoria,AU" >Melbourne</button>
     var newButton = document.createElement('button');
     newButton.setAttribute('class', "btn btnCity");
-    newButton.setAttribute("data-search-term", searchTerm );
+    newButton.setAttribute("data-search-term", searchTerm);
     newButton.textContent = name;
 
     locationButtons.appendChild(newButton)
@@ -147,6 +202,9 @@ function createOneLocationButton(name, searchTerm) {
 }
 
 function makeLocationButtons() {
+    // reset locationButtons 
+    window.locationButtons.innerHTML = '';
+
     var locationsListData = JSON.parse(localStorage.getItem('locationsList'))
     if (locationsListData == undefined) {
         return "No button data"
@@ -164,12 +222,12 @@ function makeLocationButtons() {
 function weatherAPI(lat, lon, exclude, apiKey) {
     //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
 
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=' + exclude + '&units=' + useUnits + '&appid=' + apiKey;
+    var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=' + exclude + '&units=' + unitsPref + '&appid=' + apiKey;
     // window.locationData = {};
     fetch(requestUrl)
         .then(function (response) {
             if (response.status != 200) {
-                showErrorModal('Error: ' + response.status)
+                showWindowModal('Error: ' + response.status)
             }
             console.log(response)
             return response.json();
@@ -185,7 +243,11 @@ function weatherAPI(lat, lon, exclude, apiKey) {
 
 //init ---------------------------------------
 function init() {
-    //showErrorModal('test message is written here')
+    makeLocationButtons();
+
+
+    //testing below
+    //showWindowModal('test message is written here')
 
     //console.log('final result:' + locationAPI('perth'));
 

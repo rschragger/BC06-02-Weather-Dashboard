@@ -19,19 +19,40 @@
 <body>
     <div id="header-panel">
         <h1>Weather Dashboard</h1>
+        <div id="prefsPanel">
+            <p>⚙️</p>
+            <div>
+                <ul class="pref-choice" id="pref-choice">
+                    <li>units</li>
+                    <li>alerts</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!--Error Modal Div - from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal-->
-    <div id="errorModal" class="errorModal">
+    <div id="windowModal" class="windowModal">
         <div class="modal-content">
             <span class="closeSpan">&times;</span>
             <p id="errorMessage"></p>
+            <!-- prefs panel  -->
+            <div id="prefsPanelModal">
+                <ul class="pref-choice-modal" id="pref-choice-units">Please choose your preferred unit of measure
+                    <li>metric</li>
+                    <li>imperial</li>
+                </ul>
+                <ul class="pref-choice-modal" id="pref-choice-alerts">Please choose if you want alerts on or off
+                    <li>on</li>
+                    <li>off</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <!-- End Error modal -->
 
     <div id="main-page">
+        <!-- Search panel on LHS  -->
         <div id="search-panel">
             <div id="searchForm">
                 <h2>Search for a City:</h2>
@@ -40,9 +61,10 @@
             </div>
             <hr>
             <div id="locationButtons">
-                <button class="btn btnCity" data-search-term="melbourne,victoria,AU" >Melbourne</button>
+                <button class="btn btnCity" data-search-term="melbourne,victoria,AU">Melbourne</button>
             </div>
         </div>
+        <!-- Info panel - main  -->
         <div id="info-panel">
             <div id="todayWeather" class="fCast">Melb 28 Jun 2022</div>
             <div id="forecastPanel">

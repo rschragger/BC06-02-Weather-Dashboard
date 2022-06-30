@@ -46,8 +46,82 @@ body {
   max-width: 1200px;
   width: 90%;
   margin: auto;
+  position: relative;
 
 }
+
+#prefsPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  z-index: 1;
+  /* Sit on top */
+  padding: 3px 10px;
+  font-size: 25px;
+
+  margin-top: 3px;
+  /* margin-bottom: 5% ; */
+
+  width: min-content;
+  height: 90%;
+  background-color: var(--darker);
+  background-color: var(--darker);
+}
+
+#prefsPanel:hover {
+  background-color: black;
+
+}
+
+.pref-choice {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 100%;
+
+}
+
+.pref-choice li {
+  z-index: 1;
+  font-size: 16px;
+  color: var(--highlight);
+  background-color: var(--darker);
+  padding: 3px 5px;
+  border-bottom: 2px solid var(--light);
+}
+
+.pref-choice li:hover {
+  background-color: black;
+
+}
+
+.pref-choice-modal
+{
+  display: none;
+   text-align: center;
+  /*background-color: var(--dark) ;
+  margin:5px;
+  border-radius: 3px;
+  border: 3px solid var(--highlight);
+  width: 70%;
+  padding: 2px 5px; */
+}
+
+
+.pref-choice-modal li {
+  
+  text-align: center;
+  background-color: var(--dark) ;
+  margin:5px auto;
+  border-radius: 6px;
+  border: 3px solid var(--highlight);
+  width: 70%;
+  padding: 2px 5px;
+}
+
+
+
 
 h1 {
   color: white;
@@ -114,6 +188,8 @@ hr {
   padding: 3px 10px;
   border: 1px solid var(--darker);
   border-radius: 5px;
+  height: max-content;
+  width: auto;
 
 }
 
@@ -145,7 +221,7 @@ hr {
 
 /* Modal  ----------------- */
 /* The Modal (background) */
-.errorModal {
+.windowModal {
   display: none;
   /* Hidden by default */
   position: fixed;

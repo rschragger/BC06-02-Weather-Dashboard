@@ -116,7 +116,7 @@ function locationAPI(searchTerm) {
     fetch(requestUrl)
         .then(function (response) {
             if (response.status != 200) {
-                showWindowModal('Error: ' + response.status)
+                showWindowModal('Search term not found - Error: ' + response.status)
             }
             console.log(response)
             return response.json();

@@ -15,22 +15,80 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <!-- CSS Testing Section -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+
     <style>
         * {
             font-family: 'Open Sans', sans-serif;
             font-size: 16px;
             line-height: 1;
         }
+        .today-info{
+            text-align: left ;
+        }
+        /* #tempToday::before{
+            content: 'Temperature: ';
+        } */
+        /* #dtToday::before{content: 'time: ';} */
+#sunriseToday::before{content: 'sunrise: ';}
+#sunsetToday::before{content: 'sunset: ';}
+#tempToday::before{content: 'temperature: ';}
+#feels_likeToday::before{content: 'feels like: ';}
+#pressureToday::before{content: 'pressure: ';}
+#humidityToday::before{content: 'humidity: ';}
+#dew_pointToday::before{content: 'dew point: ';}
+#uviToday::before{content: 'UV index: ';}
+#cloudsToday::before{content: 'clouds: ';}
+#visibilityToday::before{content: 'visibility: ';}
+#wind_speedToday::before{content: 'wind speed: ';}
+#wind_degToday::before{content: 'wind direction: ';}
+#descriptionToday::before{content: 'description: ';}
+
+.deg::after{ content:"\00b0";}
+/* .deg::after{ content:" &#8451;";} */
+.perc::after{ content:'%';}
+
+.spd::after{ : '<span class=`spdUnit`>km/h</span>';}
+
+
     </style>
 </head>
 
 <!-- HTML testing section  -->
+
 <body>
     <p id="test">Test</p>
+    <!-- Icons from weather in format '02n' the @4x is to make it 4times bigger-->
+    <img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" srcset="">
+    <hr>
+    <br>
+    <!-- testing html here  -->
+    <div id="info-panel">
+        <div id="todayWeather" class="fCast">Melbourne <span class="today-info" id="dtToday">28 Jun 2022 8:45pm</span>
+
+            <div class="today-info" id="sunriseToday">1656544655</div>
+            <div class="today-info  deg" id="sunsetToday">1656580944</div>
+            <div class="today-info deg" id="tempToday">284.11</div>
+            <div class="today-info deg" id="feels_likeToday">283.35</div>
+            <div class="today-info" id="pressureToday">1031</div>
+            <div class="today-info perc" id="humidityToday">80</div>
+            <div class="today-info" id="dew_pointToday">280.8</div>
+            <div class="today-info" id="uviToday">0</div>
+            <div class="today-info" id="cloudsToday">0</div>
+            <div class="today-info" id="visibilityToday">10000</div>
+            <div class="today-info spd" id="wind_speedToday">3.6</div>
+            <div class="today-info  deg" id="wind_degToday">130</div>
+            <!-- <div class="today-info" id=" idToday">800</div> -->
+            <div class="today-info" id="mainToday">Clear</div>
+            <div class="today-info" id="descriptionToday">clear sky</div>
+            <div class="today-info" id="iconToday">01n</div>
+        </div>
+    </div>
 </body>
 <!-- Javascript testing section -->
 <script>
-document.getElementById('test').textContent = "Script working";
+    document.getElementById('test').textContent = "Script working";
 </script>
 
 </html>

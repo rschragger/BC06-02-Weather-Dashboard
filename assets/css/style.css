@@ -120,9 +120,6 @@ body {
   padding: 2px 5px;
 }
 
-
-
-
 h1 {
   color: white;
   font-size: 2rem;
@@ -147,9 +144,16 @@ h1 {
 #cityInput,
 hr {
   width: 95%;
-  margin: 3px;
+  margin: 3px auto;
   border-radius: 5px;
   border: 1px solid var(--darker);
+}
+
+.collapse{
+  color:var(--highlight);
+  background-color: var(--darker);
+  width:95%;
+  margin:5px auto;
 }
 
 .btnSearch {

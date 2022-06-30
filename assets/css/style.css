@@ -64,7 +64,7 @@ h1 {
   margin: auto;
 }
 
-/* -------------------------------------- */
+/* LHS-------------------------------------- */
 #search-panel {
   width: 30%;
   background-color: var(--highlight);
@@ -86,7 +86,7 @@ hr {
   background-color: var(--dark);
 }
 
-/* -------------------------------------- */
+/* Weather Panels----------------------------------- */
 
 #info-panel {
   width: 70%;
@@ -162,24 +162,24 @@ hr {
   /* Full height */
   overflow: auto;
   /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0);
+  background-color: var(--darker);
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4);
   /* Black w/ opacity */
 }
 
-/* Modal Content */
+/* Modal Text Content */
 .modal-content {
-  background-color: #fefefe;
+  background-color: var(--highlight);
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid var(--darker);
   width: 80%;
 }
 
-/* The Close Button */
+/* Modal Close Button */
 .closeSpan {
-  color: #aaaaaa;
+  color: var(--dark);
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -187,7 +187,7 @@ hr {
 
 .closeSpan:hover,
 .closeSpan:focus {
-  color: #000;
+  color: var(--darker);
   text-decoration: none;
   cursor: pointer;
 }

@@ -113,11 +113,52 @@ function addLocationToLocal(locData) {
 
     };
     locationsList.splice(locListLength, 1, locData);
-    if(locationsList[0].name==null){locationsList.splice(0,1)};
+    if (locationsList[0].name == null) { locationsList.splice(0, 1) };
     console.log('loc list:' + JSON.stringify(locationsList))
     localStorage.setItem('locationsList', JSON.stringify(locationsList));
-    locationsList={};
+    locationsList = {};
 
+}
+//location buttons
+var locationButtons = document.getElementById('locationButtons');
+
+//function resetLocationButtonEventListener(){
+locationButtons.addEventListener('click', function (event) {
+    //event.stopPropagation();
+    var thisButton = event.target;
+    var thisSearchTerm = thisButton.getAttribute("data-search-term");
+    // console.log(searchTerm)
+    alert(thisSearchTerm);
+    event.stopPropagation();
+    locationAPI(thisSearchTerm);
+});
+//}
+
+function createOneLocationButton(name, searchTerm) {
+    //use locationButtons global
+    //<button class="btn btnCity" data-search-term="melbourne,victoria,AU" >Melbourne</button>
+    var newButton = document.createElement('button');
+    newButton.setAttribute('class', "btn btnCity");
+    newButton.setAttribute("data-search-term", searchTerm );
+    newButton.textContent = name;
+
+    locationButtons.appendChild(newButton)
+
+}
+
+function makeLocationButtons() {
+    var locationsListData = JSON.parse(localStorage.getItem('locationsList'))
+    if (locationsListData == undefined) {
+        return "No button data"
+    }
+    for (var i = 0; i < locationsListData.length; i++) {
+        var thisLocationName = locationsListData[i].name;
+        var thisLocationSearchTerm =
+            locationsListData[i].name + ',' + locationsListData[i].state + ',' + locationsListData[i].country;
+
+        createOneLocationButton(thisLocationName, thisLocationSearchTerm)
+    }
+    //resetLocationButtonEventListener()
 }
 
 function weatherAPI(lat, lon, exclude, apiKey) {
@@ -141,6 +182,8 @@ function weatherAPI(lat, lon, exclude, apiKey) {
         });
 }
 
+
+//init ---------------------------------------
 function init() {
     //showErrorModal('test message is written here')
 

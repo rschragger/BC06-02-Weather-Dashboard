@@ -24,34 +24,79 @@
             font-size: 16px;
             line-height: 1;
         }
-        .today-info{
-            text-align: left ;
+
+        .today-info {
+            text-align: left;
         }
+
         /* #tempToday::before{
             content: 'Temperature: ';
         } */
         /* #dtToday::before{content: 'time: ';} */
-#sunriseToday::before{content: 'sunrise: ';}
-#sunsetToday::before{content: 'sunset: ';}
-#tempToday::before{content: 'temperature: ';}
-#feels_likeToday::before{content: 'feels like: ';}
-#pressureToday::before{content: 'pressure: ';}
-#humidityToday::before{content: 'humidity: ';}
-#dew_pointToday::before{content: 'dew point: ';}
-#uviToday::before{content: 'UV index: ';}
-#cloudsToday::before{content: 'clouds: ';}
-#visibilityToday::before{content: 'visibility: ';}
-#wind_speedToday::before{content: 'wind speed: ';}
-#wind_degToday::before{content: 'wind direction: ';}
-#descriptionToday::before{content: 'description: ';}
+      /*  #sunriseToday::before {
+            content: 'sunrise: ';
+        }
 
-.deg::after{ content:"\00b0";}
-/* .deg::after{ content:" &#8451;";} */
-.perc::after{ content:'%';}
+        #sunsetToday::before {
+            content: 'sunset: ';
+        }
 
-.spd::after{ : '<span class=`spdUnit`>km/h</span>';}
+        #tempToday::before {
+            content: 'temperature: ';
+        }
 
+        #feels_likeToday::before {
+            content: 'feels like: ';
+        }
 
+        #pressureToday::before {
+            content: 'pressure: ';
+        }
+
+        #humidityToday::before {
+            content: 'humidity: ';
+        }
+
+        #dew_pointToday::before {
+            content: 'dew point: ';
+        }
+
+        #uviToday::before {
+            content: 'UV index: ';
+        }
+
+        #cloudsToday::before {
+            content: 'clouds: ';
+        }
+
+        #visibilityToday::before {
+            content: 'visibility: ';
+        }
+
+        #wind_speedToday::before {
+            content: 'wind speed: ';
+        }
+
+        #wind_degToday::before {
+            content: 'wind direction: ';
+        }
+
+        #descriptionToday::before {
+            content: 'description: ';
+        }
+
+        .deg::after {
+            content: "\00b0";
+        }
+
+        /* .deg::after{ content:" &#8451;";} * /
+        .perc::after {
+            content: '%';
+        }
+
+        .spd::after {
+           content : 'km/h';
+         }  */
     </style>
 </head>
 
@@ -64,6 +109,23 @@
     <hr>
     <br>
     <!-- testing html here  -->
+
+
+    <!-- End window modal -->
+    <!-- Search panel on LHS  
+     <div id="search-panel">
+        <div id="searchForm">
+            <h2>Search for a City:</h2>
+            <input type="text" name="city" id="cityInput" default="city">
+            <button id="searchBtn" class="btn  btnSearch">Search</button>
+        </div>
+        <hr>
+        <div class="collapse" id="favourites">Favourites</div>
+        <div id="locationButtons">
+            <button class="btn btnCity" data-search-term="Melbourne,Victoria,AU">Melbourne</button>
+        </div>
+    </div>-->
+
     <div id="info-panel">
         <div id="todayWeather" class="fCast">Melbourne <span class="today-info" id="dtToday">28 Jun 2022 8:45pm</span>
 
@@ -86,9 +148,109 @@
         </div>
     </div>
 </body>
-<!-- Javascript testing section -->
+<!-- Javascript testing section ----------------------------------------------JS-------------->
+<!-- Below script will save the units for weather -->
+<script src="../js/units_Weather.js"></script>
+
+<!-- <script src="../js/script.js"></script> -->
 <script>
     document.getElementById('test').textContent = "Script working";
+
+    //From main script-------------
+    var apiKey = '37572b676fcac9bf15842774f3087088';
+    var exclusions = 'minutely' // allow for 'current,minutely,hourly,daily,alerts'
+    var unitsPref = 'metric'; // allow toggle 'imperial'
+    var alertsPref = 'on'; // allow toggle 'off'
+    var fullCurrentWeather = {};
+
+    //----Units
+    var unitsInfo = JSON.parse(localStorage.getItem('unitsData'));
+
+    var unitsInfo = (localStorage.getItem('unitsData'));
+    var unitsMap = new Map(Object.entries(unitsInfo));
+  
+
+
+    function locationAPI(searchTerm) {
+        //  https://api.openweathermap.org/geo/1.0/direct?q=melbourne&limit=5&appid=37572b676fcac9bf15842774f3087088
+
+        var requestUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + searchTerm + '&limit=1&appid=' + apiKey;
+        window.locationData = {};
+        fetch(requestUrl)
+            .then(function (response) {
+                if (response.status != 200) {
+                    showWindowModal('Search term not found - Error: ' + response.status)
+                }
+                console.log(response)
+                return response.json();
+
+            })
+            .then(function (data) {
+                // console.log(data.results);
+                console.log('location data:');
+                console.log(data);
+                // testingVal=data;
+                if (data.length < 1) {
+                    //showWindowModal('No result was found for that search term, please try again');
+                } else {
+                    locationData = {
+                        'name': data[0].name,
+                        'state': data[0].state,
+                        'country': data[0].country,
+                        'lat': data[0].lat,
+                        'lon': data[0].lon,
+                    };
+                    //addLocationToLocal(JSON.stringify(locationData));
+                    weatherAPI(locationData.lat, locationData.lon, exclusions, apiKey);
+                }
+            });
+    }
+
+    function weatherAPI(lat, lon, exclude, api_Key) {
+        //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+
+        var requestUrl = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=' + exclude + '&units=' + unitsPref + '&appid=' + api_Key;
+        // window.locationData = {};
+        fetch(requestUrl)
+            .then(function (response) {
+                if (response.status != 200) {
+                    showWindowModal('Error: ' + response.status)
+                }
+                console.log(response)
+                return response.json();
+
+            })
+            .then(function (data) {
+                // console.log(data.results);
+                console.log(data);
+                fullCurrentWeather = data;
+                makeCurrentPanel()
+            });
+            
+    }
+
+   
+    function makeCurrentPanel() {
+        var currentWeather1 = fullCurrentWeather.current;
+        var currentDivs = document.querySelector('#todayWeather').children;
+        var replaceIdText = 'Today'
+
+        for (i = 0; i < currentDivs.length; i++) {
+            var detailNameId = currentDivs[i].id;
+            var detailName = detailNameId.replace(replaceIdText,'');
+            var thisDetailVal = eval('currentWeather1.' + detailName)
+
+            if (thisDetailVal != null && detailName != null) {
+                var thisID = document.getElementById(detailNameId);
+                thisID.textContent = thisDetailVal + 'xxx';
+            }
+
+        }
+    }
+
+    locationAPI('melbourne,victoria,AU');
+
+    
 </script>
 
 </html>

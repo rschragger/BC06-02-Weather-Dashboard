@@ -33,7 +33,7 @@
             content: 'Temperature: ';
         } */
         /* #dtToday::before{content: 'time: ';} */
-      /*  #sunriseToday::before {
+        /*  #sunriseToday::before {
             content: 'sunrise: ';
         }
 
@@ -154,7 +154,7 @@
 
 <!-- <script src="../js/script.js"></script> -->
 <script>
-    document.getElementById('test').textContent = "Script working";
+    // document.getElementById('test').textContent = "Script working";
 
     //From main script-------------
     var apiKey = '37572b676fcac9bf15842774f3087088';
@@ -164,11 +164,11 @@
     var fullCurrentWeather = {};
 
     //----Units
-    var unitsInfo = JSON.parse(localStorage.getItem('unitsData'));
+    var unitsInfo = JSON.parse(localStorage.getItem('unitsData')).obj;
 
-    var unitsInfo = (localStorage.getItem('unitsData'));
-    var unitsMap = new Map(Object.entries(unitsInfo));
-  
+    // var unitsInfo = (localStorage.getItem('unitsData'));
+    // var unitsMap = new Map(Object.entries(unitsInfo));
+
 
 
     function locationAPI(searchTerm) {
@@ -226,10 +226,10 @@
                 fullCurrentWeather = data;
                 makeCurrentPanel()
             });
-            
+
     }
 
-   
+
     function makeCurrentPanel() {
         var currentWeather1 = fullCurrentWeather.current;
         var currentDivs = document.querySelector('#todayWeather').children;
@@ -237,12 +237,15 @@
 
         for (i = 0; i < currentDivs.length; i++) {
             var detailNameId = currentDivs[i].id;
-            var detailName = detailNameId.replace(replaceIdText,'');
+            var detailName = detailNameId.replace(replaceIdText, '');
             var thisDetailVal = eval('currentWeather1.' + detailName)
+            var unitSuffix = eval('unitsInfo.' + detailName + '.' + unitsPref);
+            if (unitSuffix == undefined || unitSuffix== null) { unitSuffix = '' };
+
 
             if (thisDetailVal != null && detailName != null) {
                 var thisID = document.getElementById(detailNameId);
-                thisID.textContent = thisDetailVal + 'xxx';
+                thisID.textContent = thisDetailVal +' ' + unitSuffix;
             }
 
         }
@@ -250,7 +253,7 @@
 
     locationAPI('melbourne,victoria,AU');
 
-    
+
 </script>
 
 </html>

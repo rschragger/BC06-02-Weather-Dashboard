@@ -91,9 +91,9 @@ var unitsDataToStore = JSON.stringify(
          "temp":{
             "parameter":"temp",
             "description":"Temperature",
-            "standard":"Kelvin",
-            "metric":"Celsius",
-            "imperial":"Fahrenheit"
+            "standard":"°K",
+            "metric":"°C",
+            "imperial":"°F"
          },
          "humidity":{
             "parameter":"humidity",
@@ -105,16 +105,16 @@ var unitsDataToStore = JSON.stringify(
          "temp_min":{
             "parameter":"temp_min",
             "description":"Minimum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally)",
-            "standard":"Kelvin",
-            "metric":"Celsius",
-            "imperial":"Fahrenheit"
+            "standard":"°K",
+            "metric":"°C",
+            "imperial":"°F"
          },
          "temp_max":{
             "parameter":"temp_max",
             "description":"Maximum temperature at the moment. This is deviation from current temp that is possible for large cities and megalopolises geographically expanded (use these parameter optionally)",
-            "standard":"Kelvin",
-            "metric":"Celsius",
-            "imperial":"Fahrenheit"
+            "standard":"°K",
+            "metric":"°C",
+            "imperial":"°F"
          },
          "pressure":{
             "parameter":"pressure",
@@ -147,23 +147,23 @@ var unitsDataToStore = JSON.stringify(
          "speed":{
             "parameter":"speed",
             "description":"Wind speed",
-            "standard":"meter/sec",
-            "metric":"meter/sec",
-            "imperial":"miles/hour"
+            "standard":"m/s",
+            "metric":"m/s",
+            "imperial":"m/hr"
          },
          "deg":{
             "parameter":"deg",
             "description":"Wind direction",
-            "standard":"degrees (meteorological)",
-            "metric":"degrees (meteorological)",
-            "imperial":"degrees (meteorological)"
+            "standard":"° (meteorological)",
+            "metric":"° (meteorological)",
+            "imperial":"° (meteorological)"
          },
          "gust":{
             "parameter":"gust",
             "description":"Wind gust",
-            "standard":"meter/sec",
-            "metric":"meter/sec",
-            "imperial":"miles/hour"
+            "standard":"m/s",
+            "metric":"m/s",
+            "imperial":"m/hr"
          },
          "clouds":{
             "parameter":"clouds",
@@ -179,7 +179,7 @@ var unitsDataToStore = JSON.stringify(
             "metric":"%",
             "imperial":"%"
          },
-         "weather(more info Weather condition codes)":{
+         "weather (more info Weather condition codes)":{
             "parameter":"weather (more info Weather condition codes)",
             "description":"",
             "standard":"",

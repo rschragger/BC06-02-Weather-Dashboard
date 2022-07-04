@@ -19,6 +19,11 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <style>
+        /* :root {
+            --speed: 'km/h';
+            --pressure: 'hPa';
+        } */
+
         * {
             font-family: 'Open Sans', sans-serif;
             font-size: 16px;
@@ -29,11 +34,15 @@
             text-align: left;
         }
 
-        /* #tempToday::before{
+        #tempToday::before {
             content: 'Temperature: ';
-        } */
-        /* #dtToday::before{content: 'time: ';} */
-        /*  #sunriseToday::before {
+        }
+
+        #dtToday::before {
+            content: 'time: ';
+        }
+
+        */ #sunriseToday::before {
             content: 'sunrise: ';
         }
 
@@ -85,25 +94,45 @@
             content: 'description: ';
         }
 
+        .degT::after {
+            content: var(--degT);
+        }
         .deg::after {
-            content: "\00b0";
+            content: var(--deg);
         }
 
-        /* .deg::after{ content:" &#8451;";} * /
+        .presr::after {
+            content: var(--pressure);
+        }
+
+        /* .deg::after{ content:" &#8451;";} * / */
         .perc::after {
             content: '%';
         }
 
         .spd::after {
-           content : 'km/h';
-         }  */
+            content: var(--speed);
+        }
     </style>
+    <script>
+        // Get the root element
+        var rootVar = document.querySelector(':root');
+
+
+        // Create a function for setting a variable value
+        function unitSuffix_set() {
+            // Set the value of variable - note the " need to be in the final
+                        rootVar.style.setProperty('--degT',  `'°F'` );
+            rootVar.style.setProperty('--speed', `'MPH'`);
+        }
+        unitSuffix_set()
+    </script>
 </head>
 
 <!-- HTML testing section  -->
 
 <body>
-    <p id="test">Test</p>
+    <p id="test" style="background-color:var(--dark)">Test</p>
     <!-- Icons from weather in format '02n' the @4x is to make it 4times bigger-->
     <img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" srcset="">
     <hr>
@@ -127,18 +156,18 @@
     </div>-->
 
     <div id="info-panel">
-        <div id="todayWeather" class="fCast">Melbourne <span class="today-info" id="dtToday">28 Jun 2022 8:45pm</span>
+        <div id="todayWeather" class="fCast"> <span class="">Melbourne</span>  <span class="today-info" id="dtToday">28 Jun 2022 8:45pm</span>
 
             <div class="today-info" id="sunriseToday">1656544655</div>
-            <div class="today-info  deg" id="sunsetToday">1656580944</div>
-            <div class="today-info deg" id="tempToday">284.11</div>
-            <div class="today-info deg" id="feels_likeToday">283.35</div>
-            <div class="today-info" id="pressureToday">1031</div>
+            <div class="today-info" id="sunsetToday">1656580944</div>
+            <div class="today-info degT" id="tempToday">284.11</div>
+            <div class="today-info degT" id="feels_likeToday">283.35</div>
+            <div class="today-info presr" id="pressureToday">1031</div>
             <div class="today-info perc" id="humidityToday">80</div>
-            <div class="today-info" id="dew_pointToday">280.8</div>
+            <div class="today-info degT" id="dew_pointToday">280.8</div>
             <div class="today-info" id="uviToday">0</div>
             <div class="today-info" id="cloudsToday">0</div>
-            <div class="today-info" id="visibilityToday">10000</div>
+            <div class="today-info length" id="visibilityToday">10000</div>
             <div class="today-info spd" id="wind_speedToday">3.6</div>
             <div class="today-info  deg" id="wind_degToday">130</div>
             <!-- <div class="today-info" id=" idToday">800</div> -->
@@ -154,6 +183,23 @@
 
 <!-- <script src="../js/script.js"></script> -->
 <script>
+    
+        // Get the root element
+        var r = document.querySelector(':root');
+
+        // Create a function for getting a variable value
+        function myFunction_get() {
+            // Get the styles (properties and values) for the root
+            var rs = getComputedStyle(r);
+            // Alert the value of the --blue variable
+            alert("The value of --blue is: " + rs.getPropertyValue('--dark'));
+        }
+
+  
+
+
+
+
     // document.getElementById('test').textContent = "Script working";
 
     //From main script-------------
@@ -168,7 +214,6 @@
 
     // var unitsInfo = (localStorage.getItem('unitsData'));
     // var unitsMap = new Map(Object.entries(unitsInfo));
-
 
 
     function locationAPI(searchTerm) {
@@ -231,22 +276,22 @@
 
 
     function makeCurrentPanel() {
-        var currentWeather1 = fullCurrentWeather.current;
+        var currentWeatherLoc = fullCurrentWeather.current;
         var currentDivs = document.querySelector('#todayWeather').children;
         var replaceIdText = 'Today'
 
         for (i = 0; i < currentDivs.length; i++) {
             var detailNameId = currentDivs[i].id;
             var detailName = detailNameId.replace(replaceIdText, '');
-            var thisDetailVal = eval('currentWeather1.' + detailName)
-            var unitSuffix = eval('unitsInfo.' + detailName + '.' + unitsPref);
-            if (unitSuffix == undefined || unitSuffix== null) { unitSuffix = '' };
+            var thisDetailVal = eval('currentWeatherLoc.' + detailName)
+            // var unitSuffix = eval('unitsInfo.' + detailName + '.' + unitsPref);
+            // if (unitSuffix == undefined || unitSuffix== null) { unitSuffix = '' };
 
 
-            if (thisDetailVal != null && detailName != null) {
-                var thisID = document.getElementById(detailNameId);
-                thisID.textContent = thisDetailVal +' ' + unitSuffix;
-            }
+            // if (thisDetailVal != null || detailName != null) {
+            var thisID = document.getElementById(detailNameId);
+            thisID.textContent = thisDetailVal //+' ' + unitSuffix;
+            // }
 
         }
     }

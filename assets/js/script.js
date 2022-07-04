@@ -1,11 +1,10 @@
 //Create variables ---------------------------------------------------------
 //var IDs
 //default prefs
+
+var rootVar = document.querySelector(':root'); // Get the root element
 var unitsPref = 'metric'; // allow toggle 'imperial'
 var alertsPref = 'on'; // allow toggle 'off'
-
-var defaultVals = {
-}
 var testingVal = {};
 
 //Other Variables required
@@ -97,6 +96,7 @@ prefsBtn.addEventListener('click', function (event) {
         console.log(evalPrefVar + '\nUnitsPref:' + unitsPref + '  alertPref:' + alertsPref)
         prefsDiv.setAttribute('style', "display:none");
         windowModal.style.display = "none";
+        unitSuffix_set(unitsPref)
 
     });
 });
@@ -237,7 +237,61 @@ function weatherAPI(lat, lon, exclude, apiKey) {
             // console.log(data.results);
             console.log(data);
             fullCurrentWeather = data;
+            createAllPanels()
         });
+}
+
+
+
+
+// Create a function for setting variable values for metric/imperial units
+function unitSuffix_set(type) {
+    if (type == 'imperial') { //imperial
+        // Set the value of variable - note the " need to be in the final
+        rootVar.style.setProperty('--degT', `'°F'`);
+        rootVar.style.setProperty('--speed', `'mph'`);
+        rootVar.style.setProperty('--length', `'miles'`);
+    } else { //metric
+        rootVar.style.setProperty('--degT', `'°C'`);
+        rootVar.style.setProperty('--speed', `'km/h'`);
+        rootVar.style.setProperty('--length', `'km'`);
+    }
+}
+function makeTimeByClass(thisID,thisDetailVal) {
+    if (thisID.className.includes('timeXhm')){
+        thisDetailVal = moment(thisDetailVal, 'X').format("hh:mma")
+    }else if(thisID.className.includes('timeXfull')){
+        thisDetailVal = moment(thisDetailVal,'X').format("dddd Do MMMM yyy hh:mma")
+
+    }
+return thisDetailVal
+}
+
+//functions to create the panels
+function createAllPanels() {
+    makeCurrentPanel()
+}
+
+function makeCurrentPanel() {
+    var currentWeatherLoc = fullCurrentWeather.current;
+    var currentDivs = document.querySelector('#todayWeather').children;
+    var replaceIdText = 'Today'
+
+    for (i = 0; i < currentDivs.length; i++) {
+        var detailNameId = currentDivs[i].id;
+        var detailName = detailNameId.replace(replaceIdText, '');
+        // var thisDetailVal = eval('currentWeatherLoc.' + detailName);
+        var thisDetailVal = currentWeatherLoc[detailName];
+        var thisID = document.getElementById(detailNameId);
+        if (thisID) {
+            //check for time
+            if (thisID.className.includes('timeX')) {
+                
+                thisDetailVal = makeTimeByClass(thisID,thisDetailVal)
+            }
+            thisID.textContent = thisDetailVal
+        }
+    }
 }
 
 

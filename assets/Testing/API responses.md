@@ -25,6 +25,36 @@ on## Sample of Current
         }
     ]
 }
+###fullCurrentWeather.daily[0]
+{dt: 1656900000, sunrise: 1656884165, sunset: 1656918749, moonrise: 1656896160, moonset: 1656935640, …}
+clouds: 0
+dew_point: 3.75
+dt: 1656900000
+feels_like: {day: 10.86, night: 7.55, eve: 11.33, morn: 4.97}
+humidity: 57
+moon_phase: 0.15
+moonrise: 1656896160
+moonset: 1656935640
+pop: 0.01
+pressure: 1027
+sunrise: 1656884165
+sunset: 1656918749
+temp:
+	day: 12.11
+	eve: 12.18
+	max: 12.73
+	min: 7.07
+	morn: 7.27
+	night: 8.34
+[[Prototype]]: Object
+uvi: 1.94
+weather: Array(1)
+0: {id: 800, main: 'Clear', description: 'clear sky', icon: '01d'}
+length: 1
+[[Prototype]]: Array(0)
+	wind_deg: 171
+	wind_gust: 9.25
+	wind_speed: 5.24
 
 
 ## Notes

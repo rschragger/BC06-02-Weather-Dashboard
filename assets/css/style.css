@@ -10,6 +10,13 @@
 
   --stripeGrad: linear-gradient(-90deg, black 0%, var(--darker) 40%, var(--darker) 60%, var(--dark) 90%, black 100%);
   --StripeSize: 10px 20px;
+
+  /* Unit suffixes */
+  --deg: '°';
+  --degT: '°C';
+  --speed: 'km/h';
+  --pressure: 'hPa';
+  --length: 'km';
 }
 
 
@@ -96,10 +103,9 @@ body {
 
 }
 
-.pref-choice-modal
-{
+.pref-choice-modal {
   display: none;
-   text-align: center;
+  text-align: center;
   /*background-color: var(--dark) ;
   margin:5px;
   border-radius: 3px;
@@ -110,10 +116,10 @@ body {
 
 
 .pref-choice-modal li {
-  
+
   text-align: center;
-  background-color: var(--dark) ;
-  margin:5px auto;
+  background-color: var(--dark);
+  margin: 5px auto;
   border-radius: 6px;
   border: 3px solid var(--highlight);
   width: 70%;
@@ -149,11 +155,11 @@ hr {
   border: 1px solid var(--darker);
 }
 
-.collapse{
-  color:var(--highlight);
+.collapse {
+  color: var(--highlight);
   background-color: var(--darker);
-  width:95%;
-  margin:5px auto;
+  width: 95%;
+  margin: 5px auto;
 }
 
 .btnSearch {
@@ -270,6 +276,95 @@ hr {
   color: var(--darker);
   text-decoration: none;
   cursor: pointer;
+}
+
+/* -----Units of measure ----------  */
+.today-info {
+  text-align: left;
+}
+
+#tempToday::before {
+  content: 'Temperature: ';
+}
+
+#dtToday::before {
+  content: 'time: ';
+}
+
+#sunriseToday::before {
+  content: 'sunrise: ';
+}
+
+#sunsetToday::before {
+  content: 'sunset: ';
+}
+
+#tempToday::before {
+  content: 'temperature: ';
+}
+
+#feels_likeToday::before {
+  content: 'feels like: ';
+}
+
+#pressureToday::before {
+  content: 'pressure: ';
+}
+
+#humidityToday::before {
+  content: 'humidity: ';
+}
+
+#dew_pointToday::before {
+  content: 'dew point: ';
+}
+
+#uviToday::before {
+  content: 'UV index: ';
+}
+
+#cloudsToday::before {
+  content: 'clouds: ';
+}
+
+#visibilityToday::before {
+  content: 'visibility: ';
+}
+
+#wind_speedToday::before {
+  content: 'wind speed: ';
+}
+
+#wind_degToday::before {
+  content: 'wind direction: ';
+}
+
+#descriptionToday::before {
+  content: 'description: ';
+}
+
+.degT::after {
+  content: var(--degT);
+}
+
+.deg::after {
+  content: var(--deg);
+}
+
+.presr::after {
+  content: var(--pressure);
+}
+
+.perc::after {
+  content: '%';
+}
+
+.length::after {
+  content: var(--length);
+}
+
+.spd::after {
+  content: var(--speed);
 }
 
 /* Media Sizes ----------------- */

@@ -224,7 +224,7 @@ hr {
   font-size: 2rem;
 }
 .uvi{
-  background-color: red ;
+  /* background-color: #FF0000; */
   padding: 1px 6px;
   border-radius: 6px ;
   color: var(--highlight);

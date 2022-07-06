@@ -275,7 +275,7 @@ function createAllPanels() {
     makeForecastPanels();
 }
 
-function writeLocation() {
+function writeLocation() { //this puts the city name into the doc wherever class is .location
     var locNodes = document.querySelectorAll('.location');
     for (i = 0; i < locNodes.length; i++) {
         locNodes[i].textContent = locationData.name;
@@ -391,25 +391,24 @@ function makeForecastPanels() {
 function makeCurrentPanel() {
     forecastWeatherLoc = fullCurrentWeather.current;
     // for (i = 0; i < forecastWeatherLoc.length; i++) {
-        for (const detailName in forecastWeatherLoc) {
-            var thisDetailVal = '';
-            if (detailName == 'weather') { thisDetailVal = forecastWeatherLoc[detailName][0] }
-            else { thisDetailVal = forecastWeatherLoc[detailName] } //could be an array { day: 10.11, min: 5.96, max: 15.32, night: 8.44, eve: 11.27 }
-            if (typeof thisDetailVal === 'object') {
-                for (const subDetailName in thisDetailVal) {
-                    var detailId = detailName + `-${subDetailName}Today` //+ i;//e.g 'pressureToday'
-                    setDiv(detailId, thisDetailVal[subDetailName]);
-                }
-            } else {
-                var detailId = detailName + 'Today' //+ i;//e.g 'pressureToday'
-                setDiv(detailId, thisDetailVal)//.subDetailName);
-                // console.log(detailId);
+    for (const detailName in forecastWeatherLoc) {
+        var thisDetailVal = '';
+        if (detailName == 'weather') { thisDetailVal = forecastWeatherLoc[detailName][0] }
+        else { thisDetailVal = forecastWeatherLoc[detailName] } //could be an array { day: 10.11, min: 5.96, max: 15.32, night: 8.44, eve: 11.27 }
+        if (typeof thisDetailVal === 'object') {
+            for (const subDetailName in thisDetailVal) {
+                var detailId = detailName + `-${subDetailName}Today` //+ i;//e.g 'pressureToday'
+                setDiv(detailId, thisDetailVal[subDetailName]);
             }
+        } else {
+            var detailId = detailName + 'Today' //+ i;//e.g 'pressureToday'
+            setDiv(detailId, thisDetailVal)//.subDetailName);
+            // console.log(detailId);
         }
+    }
     // }
 }
 
-//<img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" >
 
 function setDiv(divId, divValue) {
     var thisDiv = document.getElementById(divId)
@@ -418,8 +417,25 @@ function setDiv(divId, divValue) {
         if (thisDiv.className.includes('timeX')) {
             divValue = makeTimeByClass(thisDiv, divValue)
         }
-        if (thisDiv.className.includes('iconImg')) {
+        if (thisDiv.className.includes('iconImg')) {//<img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" >
+
             divValue = `<img src="https://openweathermap.org/img/wn/${divValue}.png" alt="Icon for weather conditions" >`
+        }
+        //UV safety - Make it <2=green, <5=yellow <7 orange <10 dk orange else red
+        if (thisDiv.className.includes('uvi')) {
+            if (divValue < 2){
+                    document.getElementById(divId).style.cssText += 'background-color:green; color:white';
+            }else if (divValue < 5){
+                document.getElementById(divId).style.cssText += 'background-color:yellow; color:black';
+            }else if (divValue < 7){
+                console.log('less 7');
+                document.getElementById(divId).style.cssText += 'background-color:orange; color:black';
+            }else if (divValue < 10){
+                document.getElementById(divId).style.cssText += 'background-color:orangered; color:white';
+            }else {
+                document.getElementById(divId).style.cssText += 'background-color:red; color:white';
+            } 
+            
         }
         thisDiv.innerHTML = divValue;
     }

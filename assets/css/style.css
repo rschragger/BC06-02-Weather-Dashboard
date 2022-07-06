@@ -207,6 +207,7 @@ hr {
   border-radius: 5px;
   /* height: max-content; */
   width: auto;
+  background-image: linear-gradient(180deg,rgba(61, 165, 255,0.5) 40% , rgba(0, 0, 150, 0.5) 90%);
 
 }
 
@@ -217,6 +218,10 @@ hr {
 
 .smaller{
   font-size: 0.7rem;
+}
+
+.iconImg{
+  width: 200px;
 }
 
 /* ----------Special formats----------------- */

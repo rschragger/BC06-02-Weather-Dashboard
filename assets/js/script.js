@@ -119,14 +119,13 @@ function locationAPI(searchTerm) {
             if (response.status != 200) {
                 showWindowModal('Search term not found - Error: ' + response.status)
             }
-            console.log(response)
+            //console.log(response)
             return response.json();
 
         })
         .then(function (data) {
-            // console.log(data.results);
-            console.log('location data:');
-            console.log(data);
+           // console.log('location data:');
+           // console.log(data);
             // testingVal=data;
             if (data.length < 1) {
                 showWindowModal('No result was found for that search term, please try again');
@@ -170,7 +169,7 @@ function addLocationToLocal(locData) {
     };
     locationsList.splice(locListLength, 1, locData);
     if (locationsList[0].name == null) { locationsList.splice(0, 1) };
-    console.log('loc list:' + JSON.stringify(locationsList))
+    //console.log('loc list:' + JSON.stringify(locationsList))
     localStorage.setItem('locationsList', JSON.stringify(locationsList));
     locationsList = {};
     makeLocationButtons();
@@ -230,13 +229,13 @@ function weatherAPI(lat, lon, exclude, apiKey) {
             if (response.status != 200) {
                 showWindowModal('Error: ' + response.status)
             }
-            console.log(response)
+           // console.log(response)
             return response.json();
 
         })
         .then(function (data) {
             // console.log(data.results);
-            console.log(data);
+           // console.log(data);
             fullCurrentWeather = data;
             createAllPanels()
         });
@@ -260,7 +259,7 @@ function unitSuffix_set(type) {
 }
 function makeTimeByClass(thisID, thisDetailVal) {
     if (thisID.className.includes('timeXhm')) {
-        thisDetailVal = moment(thisDetailVal, 'X').format("hh:mma")
+        thisDetailVal = moment(thisDetailVal, 'X').format("h:mma")
     } else if (thisID.className.includes('timeXfull')) {
         thisDetailVal = moment(thisDetailVal, 'X').format("dddd Do MMMM yyy hh:mma")
 
@@ -417,9 +416,9 @@ function setDiv(divId, divValue) {
         if (thisDiv.className.includes('timeX')) {
             divValue = makeTimeByClass(thisDiv, divValue)
         }
-        if (thisDiv.className.includes('iconImg')) {//<img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" >
+        if (thisDiv.className.includes('iconDiv')) {//<img src="https://openweathermap.org/img/wn/02n@4x.png" alt="example icon" >
 
-            divValue = `<img src="https://openweathermap.org/img/wn/${divValue}.png" alt="Icon for weather conditions" >`
+            divValue = `<img class="iconImg" src="https://openweathermap.org/img/wn/${divValue}@4x.png" alt="Icon for weather conditions" >`
         }
         //UV safety - Make it <2=green, <5=yellow <7 orange <10 dk orange else red
         if (thisDiv.className.includes('uvi')) {
@@ -428,7 +427,6 @@ function setDiv(divId, divValue) {
             }else if (divValue < 5){
                 document.getElementById(divId).style.cssText += 'background-color:yellow; color:black';
             }else if (divValue < 7){
-                console.log('less 7');
                 document.getElementById(divId).style.cssText += 'background-color:orange; color:black';
             }else if (divValue < 10){
                 document.getElementById(divId).style.cssText += 'background-color:orangered; color:white';

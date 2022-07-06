@@ -16,7 +16,7 @@
   --degT: '°C';
   --speed: 'km/h';
   --pressure: 'hPa';
-  --length: 'km';
+  --length: 'm';
 }
 
 
@@ -181,8 +181,15 @@ hr {
 
 }
 
+#info-panel-header{
+  color: var(--highlight);
+  background-color: var(--accent);
+  padding: 2px 10px ;
+  width:100%;
+}
+
 #todayWeather {
-  width: 95%;
+  width: 70%;
 }
 
 #forecastPanel {
@@ -198,7 +205,7 @@ hr {
   padding: 3px 10px;
   border: 1px solid var(--darker);
   border-radius: 5px;
-  height: max-content;
+  /* height: max-content; */
   width: auto;
 
 }
@@ -208,7 +215,23 @@ hr {
   padding: 3px 10px;
 }
 
-/* -------------------------------------- */
+.smaller{
+  font-size: 0.7rem;
+}
+
+/* ----------Special formats----------------- */
+#tempToday{
+  font-size: 2rem;
+}
+.uvi{
+  background-color: red ;
+  padding: 1px 6px;
+  border-radius: 6px ;
+  color: var(--highlight);
+  width: fit-content;
+}
+
+/* -------Buttons------------------------------- */
 
 .btn {
   width: 95%;
@@ -285,9 +308,10 @@ hr {
 
 [data-key]:before {
 	content: attr(data-key);
+  font-size: 1rem;
 }
 
-/* 
+/* ::before attributes now handled by [data-key] 
 
 #tempToday::before {
   content: 'Temperature: ';
@@ -350,6 +374,7 @@ hr {
 }
 */
 
+/* ------- Suffixes ---------- */
 .degT::after {
   content: var(--degT);
 }

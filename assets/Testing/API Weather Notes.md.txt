@@ -1,0 +1,60 @@
+
+UV research
+
+Health Check: what does the UV Index mean? - Cancer Councilhttps://www.cancer.org.au
+UVI 1-2 is low, which generally means it's safe to be outdoors unprotected. Other classifications are moderate (3-5), high (6-7), very high (8-10) and extreme (11+). To some extent, the moderate to very high labels tell us little except that UV intensity is increasing.
+
+UV safety - Make it <2=green, <5=yellow <7 orange <10 dk orange else red
+
+CURRENT
+
+{dt: 1657081357, sunrise: 1657056943, sunset: 1657091611, temp: 16.07, feels_like: 15.12, …}
+clouds: 0
+dew_point: 6.5
+dt: 1657081357
+feels_like: 15.12
+humidity: 53
+pressure: 1020
+sunrise: 1657056943
+sunset: 1657091611
+temp: 16.07
+uvi: 1.53
+visibility: 10000
+weather: [{…}]
+	description: "clear sky"
+	icon: "01d"
+	id: 800
+	main: "Clear"
+wind_deg: 240
+wind_speed: 1.54
+
+
+DAILY
+
+dt: 1657159200, sunrise: 1657143330, sunset: 1657178043, moonrise: 1657159860, moonset: 0, …}
+
+
+clouds: 33
+dew_point: 4.39
+dt: 1657159200
+feels_like: {day: 11.18, night: 9.34, eve: 9.19, morn: 7.55}
+humidity: 59
+moon_phase: 0.25
+moonrise: 1657159860
+moonset: 0
+pop: 0.39
+pressure: 1017
+rain: 0.23
+sunrise: 1657143330
+sunset: 1657178043
+temp: {day: 12.35, min: 6.9, max: 13.14, night: 10.25, eve: 10.23, …}
+uvi: 1.98
+weather: [{…}]. - fullCurrentWeather.daily[1].weather[0].description
+	description: "light rain"
+	icon: "10d"
+	id: 500
+	main: "Rain"
+
+wind_deg: 258
+wind_gust: 10.64
+wind_speed: 4.93

@@ -69,26 +69,47 @@
         <!-- Info panel - main  -->
         <div id="info-panel">
             <div id="info-panel">
-                <div id="todayWeather" class="fCast"> <span class="location">Melbourne</span> <span class="today-info timeXfull" id="dtToday"></span>
-                    <div class="today-info degT" id="tempToday"></div>
-                    <div class="today-info timeXhm" id="sunriseToday"></div>
-                    <div class="today-info timeXhm" id="sunsetToday"></div>
-                    <div class="today-info degT" id="feels_likeToday"></div>
-                    <div class="today-info presr" id="pressureToday"></div>
-                    <div class="today-info perc" id="humidityToday"></div>
-                    <div class="today-info degT" id="dew_pointToday"></div>
-                    <div class="today-info" id="uviToday"></div>
-                    <div class="today-info" id="cloudsToday"></div>
-                    <div class="today-info length" id="visibilityToday"></div>
-                    <div class="today-info spd" id="wind_speedToday"></div>
-                    <div class="today-info  deg" id="wind_degToday"></div>
-                    <div class="today-info" id="mainToday">Clear</div>
-                    <div class="today-info" id="descriptionToday">clear sky</div>
+                <div id="todayWeather" class="fCast"> <span class="location">Melbourne</span> <span
+                        class="today-info timeXfull" id="dtToday"></span>
+                    <div class="today-info degT" id="tempToday" data-key="current: "></div>
+                    <div class="today-info timeXhm" id="sunriseToday" data-key="sunrise: "></div>
+                    <div class="today-info timeXhm" id="sunsetToday" data-key="sunset: "></div>
+                    <div class="today-info degT" id="feels_likeToday" data-key="feels like: "></div>
+                    <div class="today-info presr" id="pressureToday"  data-key="pressure: "></div>
+                    <div class="today-info perc" id="humidityToday"  data-key="humidity: "></div>
+                    <div class="today-info degT" id="dew_pointToday"  data-key="dew point: "></div>
+                    <div class="today-info" id="uviToday" data-key="uv: "></div>
+                    <div class="today-info" id="cloudsToday" data-key="clouds: "></div>
+                    <div class="today-info length" id="visibilityToday"  data-key="visibility: "></div>
+                    <div class="today-info spd" id="wind_speedToday"  data-key="wind speed: "></div>
+                    <div class="today-info  deg" id="wind_degToday" data-key="wind direction: "></div>
+                    <div class="today-info" id="mainToday"  data-key="main: "></div>
+                    <div class="today-info" id="descriptionToday"  data-key="description: "></div>
                     <div class="today-info" id="iconToday"></div>
                 </div>
             </div>
             <div id="forecastPanel">
-                <div id="day1" class="fCast dayForecast">1</div>
+                <div id="day1" class="fCast dayForecast">
+                    <div class="day-info degT" id="tempDay1">
+                        <!-- <div class="day-info degT" id="dayDay1"></div> -->
+                        <div class="day-info degT" id="minDay1" data-key="min: "></div>
+                        <div class="day-info degT" id="maxDay1" data-key="max: "></div>
+                    </div>
+                    <div class="day-info timeXhm" id="sunriseDay1" data-key="sunrise: "></div>
+                    <div class="day-info timeXhm" id="sunsetDay1" data-key="sunset: "></div>
+                    <div class="day-info degT" id="feels_likeDay1" data-key="feels like: "></div>
+                    <div class="day-info presr" id="pressureDay1"></div>
+                    <div class="day-info perc" id="humidityDay1"></div>
+                    <div class="day-info degT" id="dew_pointDay1"></div>
+                    <div class="day-info" id="uviDay1"></div>
+                    <div class="day-info" id="cloudsDay1"></div>
+                    <div class="day-info length" id="visibilityDay1"></div>
+                    <div class="day-info spd" id="wind_speedDay1"></div>
+                    <div class="day-info  deg" id="wind_degDay1"></div>
+                    <div class="day-info" id="mainDay1"></div>
+                    <div class="day-info" id="descriptionDay1"></div>
+                    <div class="day-info" id="iconDay1"></div>
+                </div>
                 <div id="day2" class="fCast dayForecast">2</div>
                 <div id="day3" class="fCast dayForecast">3</div>
                 <div id="day4" class="fCast dayForecast">4</div>

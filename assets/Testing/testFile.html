@@ -97,6 +97,7 @@
         .degT::after {
             content: var(--degT);
         }
+
         .deg::after {
             content: var(--deg);
         }
@@ -122,7 +123,7 @@
         // Create a function for setting a variable value
         function unitSuffix_set() {
             // Set the value of variable - note the " need to be in the final
-                        rootVar.style.setProperty('--degT',  `'°F'` );
+            rootVar.style.setProperty('--degT', `'°F'`);
             rootVar.style.setProperty('--speed', `'MPH'`);
         }
         unitSuffix_set()
@@ -156,9 +157,10 @@
     </div>-->
 
     <div id="info-panel">
-        <div id="todayWeather" class="fCast"> <span class="">Melbourne</span>  <span class="today-info" id="dtToday">28 Jun 2022 8:45pm</span>
+        <div id="todayWeather" class="fCast"> <span class="">Melbourne</span> <span class="today-info" id="dtToday">28
+                Jun 2022 8:45pm</span>
 
-            <div class="today-info" id="sunriseToday">1656544655</div>
+            <!-- <div class="today-info" id="sunriseToday">1656544655</div>
             <div class="today-info" id="sunsetToday">1656580944</div>
             <div class="today-info degT" id="tempToday">284.11</div>
             <div class="today-info degT" id="feels_likeToday">283.35</div>
@@ -170,11 +172,35 @@
             <div class="today-info length" id="visibilityToday">10000</div>
             <div class="today-info spd" id="wind_speedToday">3.6</div>
             <div class="today-info  deg" id="wind_degToday">130</div>
-            <!-- <div class="today-info" id=" idToday">800</div> -->
             <div class="today-info" id="mainToday">Clear</div>
             <div class="today-info" id="descriptionToday">clear sky</div>
-            <div class="today-info" id="iconToday">01n</div>
+            <div class="today-info" id="iconToday">01n</div> -->
         </div>
+    </div>
+    <div id="forecastPanel">
+        <div id="day1" class="fCast dayForecast">
+            <div class="day-info degT" id="tempDay1"></div>
+            <div class="day-info timeXhm" id="sunriseDay1"></div>
+            <div class="day-info timeXhm" id="sunsetDay1"></div>
+            <div class="day-info degT" id="feels_likeDay1"></div>
+            <div class="day-info presr" id="pressureDay1"></div>
+            <div class="day-info perc" id="humidityDay1"></div>
+            <div class="day-info degT" id="dew_pointDay1"></div>
+            <div class="day-info" id="uviDay1"></div>
+            <div class="day-info" id="cloudsDay1"></div>
+            <div class="day-info length" id="visibilityDay1"></div>
+            <div class="day-info spd" id="wind_speedDay1"></div>
+            <div class="day-info  deg" id="wind_degDay1"></div>
+            <div class="day-info" id="mainDay1"></div>
+            <div class="day-info" id="descriptionDay1"></div>
+            <div class="day-info" id="iconDay1"></div>
+        </div>
+        <div id="day2" class="fCast dayForecast">2</div>
+        <div id="day3" class="fCast dayForecast">3</div>
+        <div id="day4" class="fCast dayForecast">4</div>
+        <div id="day5" class="fCast dayForecast">5</div>
+    </div>
+
     </div>
 </body>
 <!-- Javascript testing section ----------------------------------------------JS-------------->
@@ -183,19 +209,19 @@
 
 <!-- <script src="../js/script.js"></script> -->
 <script>
-    
-        // Get the root element
-        var r = document.querySelector(':root');
 
-        // Create a function for getting a variable value
-        function myFunction_get() {
-            // Get the styles (properties and values) for the root
-            var rs = getComputedStyle(r);
-            // Alert the value of the --blue variable
-            alert("The value of --blue is: " + rs.getPropertyValue('--dark'));
-        }
+    // Get the root element
+    var r = document.querySelector(':root');
 
-  
+    // Create a function for getting a variable value
+    function myFunction_get() {
+        // Get the styles (properties and values) for the root
+        var rs = getComputedStyle(r);
+        // Alert the value of the --blue variable
+        alert("The value of --blue is: " + rs.getPropertyValue('--dark'));
+    }
+
+
 
 
 
@@ -269,7 +295,8 @@
                 // console.log(data.results);
                 console.log(data);
                 fullCurrentWeather = data;
-                makeCurrentPanel()
+               // makeCurrentPanel()
+               makeForecasePanels()
             });
 
     }
@@ -283,16 +310,34 @@
         for (i = 0; i < currentDivs.length; i++) {
             var detailNameId = currentDivs[i].id;
             var detailName = detailNameId.replace(replaceIdText, '');
-            var thisDetailVal = eval('currentWeatherLoc.' + detailName)
-            // var unitSuffix = eval('unitsInfo.' + detailName + '.' + unitsPref);
-            // if (unitSuffix == undefined || unitSuffix== null) { unitSuffix = '' };
-
-
-            // if (thisDetailVal != null || detailName != null) {
+            //var thisDetailVal = eval('currentWeatherLoc.' + detailName)
+            var thisDetailVal = currentWeatherLoc[detailName];
+           
             var thisID = document.getElementById(detailNameId);
             thisID.textContent = thisDetailVal //+' ' + unitSuffix;
             // }
 
+        }
+    }
+
+    function makeForecasePanels() {
+        var forecastWeatherLoc = fullCurrentWeather.daily;
+
+        for (d = 0; d < 5; d++) { //6 days=current day + 5 forecast days
+            var currentPanel = document.querySelector('#forecastPanel').children[d];
+            var currentDivs = currentPanel.children;
+            
+            var replaceIdText = 'Day' + (d+1)
+
+            for (i = 0; i < currentDivs.length; i++) {
+                var detailNameId = currentDivs[i].id;
+                var detailName = detailNameId.replace(replaceIdText, '');
+                var thisDetailVal = forecastWeatherLoc[i][detailName]
+             
+                var thisID = document.getElementById(detailNameId);
+                thisID.textContent = thisDetailVal //+' ' + unitSuffix;
+                // }
+            }
         }
     }
 

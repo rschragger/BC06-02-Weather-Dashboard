@@ -283,9 +283,15 @@ hr {
   text-align: left;
 }
 
+[data-key]:before {
+	content: attr(data-key);
+}
+
+/* 
+
 #tempToday::before {
   content: 'Temperature: ';
-}
+} 
 
 #dtToday::before {
   content: 'time: ';
@@ -342,6 +348,7 @@ hr {
 #descriptionToday::before {
   content: 'description: ';
 }
+*/
 
 .degT::after {
   content: var(--degT);

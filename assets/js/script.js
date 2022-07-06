@@ -270,6 +270,7 @@ return thisDetailVal
 //functions to create the panels
 function createAllPanels() {
     makeCurrentPanel()
+    makeForecastPanels()
 }
 
 function makeCurrentPanel() {
@@ -292,6 +293,49 @@ function makeCurrentPanel() {
             thisID.textContent = thisDetailVal
         }
     }
+}
+
+function makeForecastPanels() {
+    var forecastWeatherLoc = fullCurrentWeather.daily;
+
+    for (d = 0; d < 5; d++) { //6 days=current day + 5 forecast days
+        var currentPanel = document.querySelector('#forecastPanel').children[d];
+        var currentDivs = currentPanel.children;
+        
+        var replaceIdText = 'Day' + (d+1)
+
+        for (i = 0; i < currentDivs.length; i++) {
+            var detailNameId = currentDivs[i].id;
+            var detailName = detailNameId.replace(replaceIdText, '');
+            var thisDetailVal = forecastWeatherLoc[i][detailName] //could be an array { day: 10.11, min: 5.96, max: 15.32, night: 8.44, eve: 11.27 }
+         if(typeof thisDetailVal === 'object'){
+var childDivs = currentDivs[i].children
+for (cd = 0 ; cd < childDivs.length;cd++){
+    var ChildDetailNameId = childDivs[cd].id;
+    var ChildDetailName = ChildDetailNameId.replace(replaceIdText, '');
+    var ChildDetailVal = thisDetailVal[ChildDetailName];
+    var thisID = document.getElementById(ChildDetailNameId);
+    if (thisID) {
+        //check for time
+        if (thisID.className.includes('timeX')) {
+            
+            ChildDetailVal = makeTimeByClass(thisID,ChildDetailVal)
+        }
+        thisID.textContent = ChildDetailVal
+    }
+}
+         }else{
+            var thisID = document.getElementById(detailNameId);
+            if (thisID) {
+                //check for time
+                if (thisID.className.includes('timeX')) {
+                    
+                    thisDetailVal = makeTimeByClass(thisID,thisDetailVal)
+                }
+                thisID.textContent = thisDetailVal
+            }
+        }
+    }}
 }
 
 

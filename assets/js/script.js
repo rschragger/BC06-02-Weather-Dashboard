@@ -6,6 +6,7 @@ var rootVar = document.querySelector(':root'); // Get the root element
 var unitsPref = 'metric'; // allow toggle 'imperial'
 var alertsPref = 'on'; // allow toggle 'off'
 var testingVal = {};
+var currentLocation = "";
 
 //Other Variables required
 var apiKey = '37572b676fcac9bf15842774f3087088'
@@ -85,7 +86,7 @@ prefsBtn.addEventListener('click', function (event) {
     prefsDiv.setAttribute('style', "display:block");
     showWindowModal('');
 
-    //get response from modal
+    //get response click from modal
     var modalPrefsBtn = document.getElementById('prefsPanelModal');
     modalPrefsBtn.addEventListener('click', function (event) {
         var thisPrefButton = event.target;
@@ -98,7 +99,7 @@ prefsBtn.addEventListener('click', function (event) {
         prefsDiv.setAttribute('style', "display:none");
         windowModal.style.display = "none";
         unitSuffix_set(unitsPref)
-
+        locationAPI(localStorage.getItem(currentLocation))
     });
 });
 // mouseleave
@@ -124,8 +125,8 @@ function locationAPI(searchTerm) {
 
         })
         .then(function (data) {
-           // console.log('location data:');
-           // console.log(data);
+            // console.log('location data:');
+            // console.log(data);
             // testingVal=data;
             if (data.length < 1) {
                 showWindowModal('No result was found for that search term, please try again');
@@ -138,6 +139,12 @@ function locationAPI(searchTerm) {
                     'lon': data[0].lon,
                 };
                 addLocationToLocal(JSON.stringify(locationData));
+                if (locationData.state == undefined) {
+                    currentLocation = (locationData.name + ", " + locationData.country);
+                } else {
+                    currentLocation = (locationData.name + ", " + locationData.state + ", " + locationData.country);
+                }
+                addCurrentLocationToLocal(currentLocation);
                 weatherAPI(locationData.lat, locationData.lon, exclusions, apiKey);
             }
         });
@@ -175,6 +182,11 @@ function addLocationToLocal(locData) {
     makeLocationButtons();
 
 }
+
+function addCurrentLocationToLocal(locData) { //save the search term e.g. 'melbourne, victoria, AU'
+    localStorage.setItem('currentLocation', locData)
+}
+
 //location buttons
 var locationButtons = document.getElementById('locationButtons');
 
@@ -183,6 +195,7 @@ locationButtons.addEventListener('click', function (event) {
     event.stopPropagation();
     var thisButton = event.target;
     var thisSearchTerm = thisButton.getAttribute("data-search-term");
+    localStorage.setItem('currentLocation', thisSearchTerm);
     // console.log(searchTerm)
     locationAPI(thisSearchTerm);
 
@@ -229,13 +242,13 @@ function weatherAPI(lat, lon, exclude, apiKey) {
             if (response.status != 200) {
                 showWindowModal('Error: ' + response.status)
             }
-           // console.log(response)
+            // console.log(response)
             return response.json();
 
         })
         .then(function (data) {
             // console.log(data.results);
-           // console.log(data);
+            // console.log(data);
             fullCurrentWeather = data;
             createAllPanels()
         });
@@ -272,6 +285,7 @@ function createAllPanels() {
     writeLocation()
     makeCurrentPanel();
     makeForecastPanels();
+    writeDate();
 }
 
 function writeLocation() { //this puts the city name into the doc wherever class is .location
@@ -283,85 +297,16 @@ function writeLocation() { //this puts the city name into the doc wherever class
 
 }
 
-/* this function was too complex and didn't really work
-
-function makeCurrentPanelORIG() {
-    var replaceIdText = 'Today';
-    var currentWeatherLoc = fullCurrentWeather.current;
-    var mainDivs = document.querySelector('#day0').children;
-    for (md = 0; md < mainDivs.length; md++) {
-        var currentDivs = mainDivs[md].children;
-        for (i = 0; i < currentDivs.length; i++) {
-            var detailNameId = currentDivs[i].id;
-            var detailName = detailNameId.replace(replaceIdText, '');
-            // var thisDetailVal = eval('currentWeatherLoc.' + detailName);
-
-
-
-            var thisDetailVal = currentWeatherLoc[detailName];
-            var thisID = document.getElementById(detailNameId);
-            if (thisID) {
-                //check for time
-                if (thisID.className.includes('timeX')) {
-
-                    thisDetailVal = makeTimeByClass(thisID, thisDetailVal)
-                }
-                thisID.textContent = thisDetailVal
-            }
-        }
+function writeDate() { //this puts the date into the doc wherever class is 'dateDay1'
+    var locNodes = document.querySelectorAll('.timeXfcast');
+    var currentTime = fullCurrentWeather.current.dt;
+    for (i = 0; i < locNodes.length; i++) {
+        var daysOffset = (locNodes[i].id).replace('dateDay', '');
+        var thisTime = moment(currentTime, "X").add(daysOffset, 'days');
+        locNodes[i].textContent = moment(thisTime).format("ddd Do");
     }
-}*/
 
-/* this function was too complex and didn't really work
-function makeForecastPanelsORIG() {
-    var forecastWeatherLoc = fullCurrentWeather.daily;
-
-    for (d = 0; d < 6; d++) { //6 days=current day + 5 forecast days
-        var currentPanel = document.querySelector('#forecastPanel').children[d];
-        var replaceIdText = 'Day' + d;
-        // var currentDivs = currentPanel.children;
-
-        var mainDivs = document.querySelector('#day' + d).children;
-        //Get the main div's sub divs and go through
-        for (md = 0; md < mainDivs.length; md++) {
-            var currentDivs = mainDivs[md].children;
-            //Get the sub divs and go through adding data
-            for (i = 0; i < currentDivs.length; i++) {
-                var detailNameId = currentDivs[i].id;
-                var detailName = detailNameId.replace(replaceIdText, '');
-                var thisDetailVal = '';
-                if (detailName == 'weather') { thisDetailVal = forecastWeatherLoc[i][detailName][0] }
-                else { thisDetailVal = forecastWeatherLoc[i][detailName] } //could be an array { day: 10.11, min: 5.96, max: 15.32, night: 8.44, eve: 11.27 }
-                if (typeof thisDetailVal === 'object') {
-                    var childDivs = currentDivs[i].children
-                    for (cd = 0; cd < childDivs.length; cd++) {
-                        var ChildDetailNameId = childDivs[cd].id;
-                        var ChildDetailName = ChildDetailNameId.replace(replaceIdText, '');
-                        var ChildDetailVal = thisDetailVal[ChildDetailName];
-                        var thisID = document.getElementById(ChildDetailNameId);
-                        if (thisID) {
-                            //Add data here for array objects (check for time format and add)
-                            if (thisID.className.includes('timeX')) {
-                                ChildDetailVal = makeTimeByClass(thisID, ChildDetailVal)
-                            }
-                            thisID.textContent = ChildDetailVal
-                        }
-                    }
-                } else {
-                    //Add data here (check for time format and add)
-                    var thisID = document.getElementById(detailNameId);
-                    if (thisID) { //only add if the div id exists
-                        //check for time
-                        if (thisID.className.includes('timeX')) {
-                            thisDetailVal = makeTimeByClass(thisID, thisDetailVal)
-                        }
-                        thisID.textContent = thisDetailVal
-                    }
-                }
-            }
-        }
-    }
-}*/
+}
 
 function makeForecastPanels() {
     forecastWeatherLoc = fullCurrentWeather.daily;
@@ -422,18 +367,18 @@ function setDiv(divId, divValue) {
         }
         //UV safety - Make it <2=green, <5=yellow <7 orange <10 dk orange else red
         if (thisDiv.className.includes('uvi')) {
-            if (divValue < 2){
-                    document.getElementById(divId).style.cssText += 'background-color:green; color:white';
-            }else if (divValue < 5){
+            if (divValue < 2) {
+                document.getElementById(divId).style.cssText += 'background-color:green; color:white';
+            } else if (divValue < 5) {
                 document.getElementById(divId).style.cssText += 'background-color:yellow; color:black';
-            }else if (divValue < 7){
+            } else if (divValue < 7) {
                 document.getElementById(divId).style.cssText += 'background-color:orange; color:black';
-            }else if (divValue < 10){
+            } else if (divValue < 10) {
                 document.getElementById(divId).style.cssText += 'background-color:orangered; color:white';
-            }else {
+            } else {
                 document.getElementById(divId).style.cssText += 'background-color:red; color:white';
-            } 
-            
+            }
+
         }
         thisDiv.innerHTML = divValue;
     }
@@ -443,6 +388,13 @@ function setDiv(divId, divValue) {
 function init() {
     makeLocationButtons();
 
+    // Go to last searched location
+    currLocation = localStorage.getItem('currentLocation');
+    if (currLocation != undefined) {
+        locationAPI(localStorage.getItem('currentLocation'))
+    } else {
+        locationAPI('melbourne,victoria, AU');
+    }
 
     //testing below
     //showWindowModal('test message is written here')

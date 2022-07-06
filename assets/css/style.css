@@ -11,6 +11,8 @@
   --stripeGrad: linear-gradient(-90deg, black 0%, var(--darker) 40%, var(--darker) 60%, var(--dark) 90%, black 100%);
   --StripeSize: 10px 20px;
 
+  --stRadius: 0 6px 0 6px;
+
   /* Unit suffixes */
   --deg: '°';
   --degT: '°C';
@@ -108,7 +110,7 @@ body {
   text-align: center;
   /*background-color: var(--dark) ;
   margin:5px;
-  border-radius: 3px;
+  border-radius: var(--stRadius) ;
   border: 3px solid var(--highlight);
   width: 70%;
   padding: 2px 5px; */
@@ -120,7 +122,7 @@ body {
   text-align: center;
   background-color: var(--dark);
   margin: 5px auto;
-  border-radius: 6px;
+  border-radius: var(--stRadius);
   border: 3px solid var(--highlight);
   width: 70%;
   padding: 2px 5px;
@@ -130,6 +132,8 @@ h1 {
   color: white;
   font-size: 2rem;
   text-shadow: 3px 3px 4px var(--darker);
+  max-width: 80%;
+  margin: auto;
 }
 
 #main-page {
@@ -139,6 +143,9 @@ h1 {
   max-width: 1200px;
   width: 90%;
   margin: auto;
+}
+.fullWidth{
+  width:100%;
 }
 
 /* LHS-------------------------------------- */
@@ -151,7 +158,7 @@ h1 {
 hr {
   width: 95%;
   margin: 3px auto;
-  border-radius: 5px;
+  border-radius: var(--stRadius);
   border: 1px solid var(--darker);
 }
 
@@ -177,19 +184,45 @@ hr {
   background-color: var(--highlight);
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-around;
 
 }
 
-#info-panel-header{
+.fCast {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+
+  margin: 3px;
+  padding: 3px 10px;
+  border: 1px solid var(--darker);
+  border-radius: var(--stRadius);
+  /* height: max-content; */
+  width: auto;
+  background-image: linear-gradient(180deg, rgba(61, 165, 255, 0.5) 40%, rgba(0, 0, 150, 0.5) 90%);
+
+}
+
+.fcastHeader,
+#info-panel-header {
   color: var(--highlight);
   background-color: var(--accent);
-  padding: 2px 10px ;
-  width:100%;
+  padding: 2px 10px;
+  width: 100%;
+}
+.location{
+   white-space: nowrap;
 }
 
 #todayWeather {
   width: 70%;
+}
+.iconDesc{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 #forecastPanel {
@@ -200,15 +233,26 @@ hr {
   justify-content: space-between;
 }
 
-.fCast {
-  margin: 3px;
-  padding: 3px 10px;
-  border: 1px solid var(--darker);
-  border-radius: 5px;
-  /* height: max-content; */
-  width: auto;
-  background-image: linear-gradient(180deg,rgba(61, 165, 255,0.5) 40% , rgba(0, 0, 150, 0.5) 90%);
+stdInfo {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
 
+}
+
+.extraInfo {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+
+.extraInfo>div {
+  min-width: 33%;
+  font-size: .8rem;
 }
 
 .dayForecast {
@@ -216,22 +260,31 @@ hr {
   padding: 3px 10px;
 }
 
-.smaller{
+.smaller {
   font-size: 0.7rem;
 }
 
-.iconImg{
-  width: 200px;
+.iconImg {
+  width: 50px;
+  object-fit: cover;
+}
+
+.iconDiv {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 /* ----------Special formats----------------- */
-#tempToday{
+#tempToday {
   font-size: 2rem;
 }
-.uvi{
+
+.uvi {
   /* background-color: #FF0000; */
   padding: 1px 6px;
-  border-radius: 6px ;
+  border-radius: var(--stRadius);
   color: var(--highlight);
   width: fit-content;
 }
@@ -240,7 +293,7 @@ hr {
 
 .btn {
   width: 95%;
-  border-radius: 3px;
+  border-radius: var(--stRadius);
   color: var(--highlight);
   box-shadow: inset -2px -2px 4px var(--darker);
   margin: 3px;
@@ -270,7 +323,7 @@ hr {
   /* Location of the box */
   left: 0;
   top: 0;
-  width: 100%;
+  width: 80%;
   /* Full width */
   height: 100%;
   /* Full height */
@@ -288,7 +341,7 @@ hr {
   margin: auto;
   padding: 20px;
   border: 1px solid var(--darker);
-  width: 80%;
+  width: 70%;
 }
 
 /* Modal Close Button */
@@ -307,77 +360,16 @@ hr {
 }
 
 /* -----Units of measure ----------  */
+.day-info,
 .today-info {
   text-align: left;
 }
 
 [data-key]:before {
-	content: attr(data-key);
-  font-size: 1rem;
+  content: attr(data-key);
+  font-size: .8rem;
 }
 
-/* ::before attributes now handled by [data-key] 
-
-#tempToday::before {
-  content: 'Temperature: ';
-} 
-
-#dtToday::before {
-  content: 'time: ';
-}
-
-#sunriseToday::before {
-  content: 'sunrise: ';
-}
-
-#sunsetToday::before {
-  content: 'sunset: ';
-}
-
-#tempToday::before {
-  content: 'temperature: ';
-}
-
-#feels_likeToday::before {
-  content: 'feels like: ';
-}
-
-#pressureToday::before {
-  content: 'pressure: ';
-}
-
-#humidityToday::before {
-  content: 'humidity: ';
-}
-
-#dew_pointToday::before {
-  content: 'dew point: ';
-}
-
-#uviToday::before {
-  content: 'UV index: ';
-}
-
-#cloudsToday::before {
-  content: 'clouds: ';
-}
-
-#visibilityToday::before {
-  content: 'visibility: ';
-}
-
-#wind_speedToday::before {
-  content: 'wind speed: ';
-}
-
-#wind_degToday::before {
-  content: 'wind direction: ';
-}
-
-#descriptionToday::before {
-  content: 'description: ';
-}
-*/
 
 /* ------- Suffixes ---------- */
 .degT::after {
@@ -411,6 +403,9 @@ hr {
     font-size: 1rem;
   }
 
+  .extraInfo>div {
+    min-width: 50%;
+  }
 }
 
 @media (max-width: 450px) {
@@ -422,6 +417,11 @@ hr {
 
   #search-panel {
     width: 95%;
+  }
+
+  #cityInput placeholder {
+    /* color:var(--light); */
+    font-size: .7rem;
   }
 
   #info-panel {

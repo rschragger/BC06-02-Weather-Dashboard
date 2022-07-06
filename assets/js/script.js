@@ -266,7 +266,7 @@ function unitSuffix_set(type) {
         rootVar.style.setProperty('--length', `'miles'`);
     } else { //metric
         rootVar.style.setProperty('--degT', `'°C'`);
-        rootVar.style.setProperty('--speed', `'km/h'`);
+        rootVar.style.setProperty('--speed', `'m/s'`);
         rootVar.style.setProperty('--length', `'km'`);
     }
 }

@@ -16,7 +16,7 @@
   /* Unit suffixes */
   --deg: '°';
   --degT: '°C';
-  --speed: 'km/h';
+  --speed: 'm/s';
   --pressure: 'hPa';
   --length: 'm';
 }
@@ -144,8 +144,9 @@ h1 {
   width: 90%;
   margin: auto;
 }
-.fullWidth{
-  width:100%;
+
+.fullWidth {
+  width: 100%;
 }
 
 /* LHS-------------------------------------- */
@@ -212,17 +213,23 @@ hr {
   padding: 2px 10px;
   width: 100%;
 }
-.location{
-   white-space: nowrap;
+
+.location {
+  white-space: nowrap;
 }
 
 #todayWeather {
   width: 70%;
 }
-.iconDesc{
+
+.iconDesc {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+}
+
+.iconDesc>div {
+  min-width: 50%;
 }
 
 #forecastPanel {

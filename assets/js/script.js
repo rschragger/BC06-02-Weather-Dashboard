@@ -194,21 +194,47 @@ var locationButtons = document.getElementById('locationButtons');
 locationButtons.addEventListener('click', function (event) {
     event.stopPropagation();
     var thisButton = event.target;
-    var thisSearchTerm = thisButton.getAttribute("data-search-term");
-    localStorage.setItem('currentLocation', thisSearchTerm);
-    // console.log(searchTerm)
-    locationAPI(thisSearchTerm);
-
+    console.log(thisButton.parentElement)
+    //check if delete button
+    if (thisButton.className == 'btnClose') {
+        //remove button
+        var parentBtn = thisButton.parentElement;
+        var delItemString = parentBtn.getAttribute("data-search-term");
+        // https://stackoverflow.com/questions/16470113/how-to-return-part-of-string-before-a-certain-character str = str.substring(0, str.indexOf(":"));;
+        var delItemString = delItemString.substring(0, delItemString.indexOf(","));
+        var dataObject = JSON.parse(localStorage.getItem('locationsList'));
+        removeFromList(delItemString, dataObject);
+    }
+    else {
+        var thisSearchTerm = thisButton.getAttribute("data-search-term");
+        localStorage.setItem('currentLocation', thisSearchTerm);
+        // console.log(searchTerm)
+        locationAPI(thisSearchTerm);
+    }
 });
+
+function removeFromList(delItemString, dataObject) {
+    for (i = dataObject.length - 1; i >= 0; i--) {
+        // console.log(dataObject[i].name);
+        if (dataObject[i].name == delItemString) {
+            dataObject.splice(i, 1)
+        }
+    }
+    //console.log(dataObject);
+    localStorage.setItem('locationsList', JSON.stringify(dataObject));
+    var element = document.getElementById(delItemString +"Btn");
+    element.remove();
+}
 
 
 function createOneLocationButton(name, searchTerm) {
     //use locationButtons global
     //<button class="btn btnCity" data-search-term="melbourne,victoria,AU" >Melbourne</button>
     var newButton = document.createElement('button');
+    newButton.setAttribute('id', name + "Btn");
     newButton.setAttribute('class', "btn btnCity");
     newButton.setAttribute("data-search-term", searchTerm);
-    newButton.textContent = name;
+    newButton.innerHTML = name + '<span class="btnClose"></span>';
 
     locationButtons.appendChild(newButton)
 
@@ -231,6 +257,10 @@ function makeLocationButtons() {
     }
     //resetLocationButtonEventListener()
 }
+
+var delLocationBtn = document.getElementsByClassName('btnClose')
+
+
 
 function weatherAPI(lat, lon, exclude, apiKey) {
     //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
@@ -352,7 +382,6 @@ function makeCurrentPanel() {
     }
     // }
 }
-
 
 function setDiv(divId, divValue) {
     var thisDiv = document.getElementById(divId)

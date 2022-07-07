@@ -352,6 +352,20 @@ padding: 3px;
   filter: brightness(80%);
 }
 
+.btnClose {
+  color: var(--darkest);
+  float: right;
+  padding: 0 5px 0 2px;
+}
+.btnClose::before {
+  content: '𝘅';
+  /* font-size: .8rem;  */
+  color: var(--darker);
+  font-weight:900;
+ 
+
+}
+
 /* Modal  ----------------- */
 /* The Modal (background) */
 .windowModal {

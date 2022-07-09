@@ -4,7 +4,7 @@
 
 var rootVar = document.querySelector(':root'); // Get the root element
 var unitsPref = 'metric'; // allow toggle 'imperial'
-var alertsPref = 'on'; // allow toggle 'off'
+var themePref = 'simple'; // allow  'simple' or 'colour'
 var testingVal = {};
 var currentLocation = "";
 
@@ -15,7 +15,7 @@ var locationData = {}; //this is an object
 var limitGeoNo = 1; //how many results for geolocation
 
 //Weather API variables
-var exclusions = 'minutely' // allow for 'current,minutely,hourly,daily,alerts'
+var exclusions = 'minutely' // allow for 'current,minutely,hourly,daily'
 var fullCurrentWeather = {};
 var forecastWeatherLoc = {};
 
@@ -78,7 +78,9 @@ prefsBtn.addEventListener('click', function (event) {
     event.stopPropagation();
     //Initiate by ensuring all choices are hidden
     var hideAllDivClass = document.getElementsByClassName('pref-choice-modal');
-    hideAllDivClass.style = "display:none";
+    for (var i = 0; i < hideAllDivClass.length; i++) {
+        hideAllDivClass[i].style = "display:none";
+    }
     var thisButton = event.target;
     // console.log(thisButton.textContent)
     var useDivId = 'pref-choice-' + thisButton.textContent;
@@ -90,15 +92,20 @@ prefsBtn.addEventListener('click', function (event) {
     var modalPrefsBtn = document.getElementById('prefsPanelModal');
     modalPrefsBtn.addEventListener('click', function (event) {
         var thisPrefButton = event.target;
-        console.log(thisPrefButton.textContent);
+        //    console.log(thisPrefButton.textContent);
         var prefText = thisPrefButton.textContent;
-        var evalPrefVar = thisButton.textContent + `Pref = '` + prefText + `'`;
-        console.log(evalPrefVar);
-        eval(evalPrefVar);
-        console.log(evalPrefVar + '\nUnitsPref:' + unitsPref + '  alertPref:' + alertsPref)
+        var thisPrefParent=thisPrefButton.parentElement;
+        //var evalPrefVar = thisButton.textContent + `Pref = '` + prefText + `'`;
+        //console.log(evalPrefVar);
+        //eval(evalPrefVar);
+        //console.log(evalPrefVar + '\nUnitsPref:' + unitsPref + '  themePref:' + themePref)
         prefsDiv.setAttribute('style', "display:none");
         windowModal.style.display = "none";
-        unitSuffix_set(unitsPref)
+        if (thisPrefParent.id.includes('theme')) {
+            theme_set(prefText);
+        } else if (thisPrefParent.id.includes('unit')) {
+            unitSuffix_set(prefText);
+        }
         locationAPI(localStorage.getItem(currentLocation))
     });
 });
@@ -194,7 +201,7 @@ var locationButtons = document.getElementById('locationButtons');
 locationButtons.addEventListener('click', function (event) {
     event.stopPropagation();
     var thisButton = event.target;
-    console.log(thisButton.parentElement)
+    // console.log(thisButton.parentElement)
     //check if delete button
     if (thisButton.className == 'btnClose') {
         //remove button
@@ -222,7 +229,7 @@ function removeFromList(delItemString, dataObject) {
     }
     //console.log(dataObject);
     localStorage.setItem('locationsList', JSON.stringify(dataObject));
-    var element = document.getElementById(delItemString +"Btn");
+    var element = document.getElementById(delItemString + "Btn");
     element.remove();
 }
 
@@ -299,7 +306,25 @@ function unitSuffix_set(type) {
         rootVar.style.setProperty('--speed', `'m/s'`);
         rootVar.style.setProperty('--length', `'km'`);
     }
+    unitPref = type;
+    localStorage.setItem('units', type);
 }
+
+function theme_set(type) {
+    if (type == 'simple') { //imperial
+        // Set the value of variable - note the " need to be in the final
+        rootVar.style.setProperty('--fCastColLt', 'white');
+        rootVar.style.setProperty('--fCastColDk', 'white');
+
+    } else { //colour
+        rootVar.style.setProperty('--fCastColLt', 'var(--fCastColLtCol)');
+        rootVar.style.setProperty('--fCastColDk', 'var(--fCastColDkCol)');
+    }
+    themePref = type ;
+    localStorage.setItem('theme', type);
+}
+
+
 function makeTimeByClass(thisID, thisDetailVal) {
     if (thisID.className.includes('timeXhm')) {
         thisDetailVal = moment(thisDetailVal, 'X').format("h:mma")
@@ -416,6 +441,18 @@ function setDiv(divId, divValue) {
 //init ---------------------------------------
 function init() {
     makeLocationButtons();
+
+    //set prefs from storage
+
+    if (localStorage.getItem('theme')) {
+        themePref = localStorage.getItem('theme');
+        theme_set(themePref)
+    };
+    if (localStorage.getItem('units')) {
+        unitsPref = localStorage.getItem('units');
+        unitSuffix_set(unitsPref)
+    };
+
 
     // Go to last searched location
     currLocation = localStorage.getItem('currentLocation');

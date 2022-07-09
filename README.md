@@ -22,10 +22,13 @@ Github page at https://github.com/rschragger/BC06-02-Weather-Dashboard
 ## Usage
 
 ### Initial view
-![Screenshot - Initial View](./assets/images/Home.png)<br>
-The home screen has
+![Screenshot - Initial View](/Instructions/Screen%20Shot%20-Home%20Screen.png)<br>
 
+### Demo video
 
+<iframe src="https://drive.google.com/file/d/1sxWsZ3q6T1mkKdyZJITIMpb9b0F5VMeF/preview" width="640" height="480"></iframe>
+
+![Link to screencast](https://drive.google.com/file/d/1sxWsZ3q6T1mkKdyZJITIMpb9b0F5VMeF/view)
 
 ## Credits
 

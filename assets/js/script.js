@@ -106,7 +106,8 @@ prefsBtn.addEventListener('click', function (event) {
         } else if (thisPrefParent.id.includes('unit')) {
             unitSuffix_set(prefText);
         }
-        locationAPI(localStorage.getItem(currentLocation))
+        locationAPI(localStorage.getItem('currentLocation')
+)
     });
 });
 // mouseleave
@@ -459,7 +460,8 @@ function init() {
     if (currLocation != undefined) {
         locationAPI(localStorage.getItem('currentLocation'))
     } else {
-        locationAPI('melbourne,victoria, AU');
+        currentLocation = 'melbourne,victoria, AU';
+        locationAPI(currentLocation);
     }
 
     //testing below
